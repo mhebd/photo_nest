@@ -130,7 +130,9 @@ class _LoginPageState extends State<LoginPage> {
         const Text('Not have an account?'),
         const SizedBox(width: 10),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, 'register');
+          },
           child: const Text(
             'Register Now',
             style: TextStyle(
