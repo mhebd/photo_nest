@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,13 +18,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _email = TextEditingController();
+  File? image;
 
   void _handleLogin() {
     bool isValid = _loginFormState.currentState!.validate();
     if (isValid) {
-      print(_name.value);
-      print(_email.value);
-      print(_password.value);
+      print(_name.text);
+      print(_email.text);
+      print(_password.text);
     }
   }
 
@@ -43,6 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              _profilePhoto(),
+              const SizedBox(height: 40),
               _loginForm(),
               const SizedBox(height: 40),
               _registerButton(),
@@ -61,6 +67,37 @@ class _RegisterPageState extends State<RegisterPage> {
       style: TextStyle(
         fontSize: 22,
         fontFamily: "Lobster",
+      ),
+    );
+  }
+
+  // Profile photo widget
+  Widget _profilePhoto() {
+    ImageProvider imageProvider = image != null
+        ? FileImage(image!)
+        : const NetworkImage('https://picsum.photos/200/200.jpg');
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          FilePicker.platform.pickFiles(type: FileType.image).then((result) {
+            if (result != null) {
+              setState(() {
+                image = File(result.files.single.path!);
+              });
+            }
+          });
+        },
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: imageProvider,
+            ),
+          ),
+        ),
       ),
     );
   }

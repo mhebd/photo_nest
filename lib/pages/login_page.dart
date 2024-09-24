@@ -18,8 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLogin() {
     bool isValid = _loginFormState.currentState!.validate();
     if (isValid) {
-      print(_email.value);
-      print(_password.value);
+      print(_email.text);
+      print(_password.text);
     }
   }
 
