@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
@@ -80,23 +79,29 @@ class _RegisterPageState extends State<RegisterPage> {
           FilePickerResult? result = await FilePicker.platform.pickFiles();
 
           if (result != null) {
-            image = result.files.single.bytes;
+            setState(() {
+              image = result.files.single.bytes!;
+            });
           }
         },
         child: Container(
           width: 100,
           height: 100,
-          color: Colors.red,
-          // decoration: BoxDecoration(
-          //   borderRadius: const BorderRadius.all(Radius.circular(20)),
-          //   image: image != null
-          //       ? null
-          //       : const DecorationImage(
-          //           fit: BoxFit.cover,
-          //           image: NetworkImage('https://picsum.photos/200/200.jpg'),
-          //         ),
-          // ),
-          child: Image.memory(image!),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+            color: Colors.white38,
+          ),
+          child: image != null
+              ? Image.memory(image!, fit: BoxFit.cover)
+              : const Center(
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.red,
+                    size: 40,
+                  ),
+                ),
         ),
       ),
     );
