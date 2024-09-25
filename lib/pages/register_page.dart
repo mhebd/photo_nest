@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _email = TextEditingController();
-  Uint8List? image;
+  File? image;
 
   void _handleLogin() {
     bool isValid = _loginFormState.currentState!.validate();
@@ -80,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
           if (result != null) {
             setState(() {
-              image = result.files.single.bytes!;
+              image = File(result.files.single.path!);
             });
           }
         },
@@ -94,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
             color: Colors.white38,
           ),
           child: image != null
-              ? Image.memory(image!, fit: BoxFit.cover)
+              ? Image(image: FileImage(image!), fit: BoxFit.cover)
               : const Center(
                   child: Icon(
                     Icons.camera_alt,
