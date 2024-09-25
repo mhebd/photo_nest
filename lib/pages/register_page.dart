@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _email = TextEditingController();
-  File? image;
+  Uint8List? image;
 
   void _handleLogin() {
     bool isValid = _loginFormState.currentState!.validate();
@@ -73,30 +74,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Profile photo widget
   Widget _profilePhoto() {
-    ImageProvider imageProvider = image != null
-        ? FileImage(image!)
-        : const NetworkImage('https://picsum.photos/200/200.jpg');
     return Center(
       child: GestureDetector(
-        onTap: () {
-          FilePicker.platform.pickFiles(type: FileType.image).then((result) {
-            if (result != null) {
-              setState(() {
-                image = File(result.files.single.path!);
-              });
-            }
-          });
+        onTap: () async {
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if (result != null) {
+            image = result.files.single.bytes;
+          }
         },
         child: Container(
           width: 100,
           height: 100,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: imageProvider,
-            ),
-          ),
+          color: Colors.red,
+          // decoration: BoxDecoration(
+          //   borderRadius: const BorderRadius.all(Radius.circular(20)),
+          //   image: image != null
+          //       ? null
+          //       : const DecorationImage(
+          //           fit: BoxFit.cover,
+          //           image: NetworkImage('https://picsum.photos/200/200.jpg'),
+          //         ),
+          // ),
+          child: Image.memory(image!),
         ),
       ),
     );
