@@ -13,11 +13,39 @@ class _HomePageState extends State<HomePage> {
   _HomePageState();
 
   int pageIndex = 0;
-  List<Widget> pages = [FeedsPage(), ProfilePage()];
+  List<Widget> pages = [feedsPage(), profilePage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text(
+          pageIndex == 1 ? 'Mehedi Hassan' : 'PhotoNext',
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: 'Lobster',
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.camera_alt_outlined,
+              color: Colors.white,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(width: 16)
+        ],
+      ),
       body: pages[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: (idx) {
@@ -38,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.face_2_outlined,
+              Icons.person_4_outlined,
               color: Colors.white,
             ),
             label: 'Profile',
