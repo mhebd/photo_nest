@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "213956856275",
+    "project_id": "photonest-f277f",
+    "storage_bucket": "photonest-f277f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213956856275:android:6c2f5b9993f46050148726",
+        "android_client_info": {
+          "package_name": "com.photo_nest.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8St130qhw8MVQApiHKiFh20rFWx_cqgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
