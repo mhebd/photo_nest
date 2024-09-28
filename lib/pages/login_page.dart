@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:photo_nest/services/firebase_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,11 +16,24 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormState = GlobalKey<FormState>();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _email = TextEditingController();
+  FirebaseServices? firebaseServices;
 
-  void _handleLogin() {
+  @override
+  void initState() {
+    super.initState();
+    firebaseServices = GetIt.instance.get<FirebaseServices>();
+  }
+
+  void _handleLogin() async {
     bool isValid = _loginFormState.currentState!.validate();
     if (isValid) {
-      Navigator.pushNamed(context, 'home');
+      bool? isHasUser = await firebaseServices!
+          .loginUser(email: _email.text, password: _password.text);
+
+      if (isHasUser) {
+        // ignore: use_build_context_synchronously
+        Navigator.popAndPushNamed(context, 'home');
+      }
     }
   }
 
