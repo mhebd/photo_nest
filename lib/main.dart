@@ -1,9 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:photo_nest/pages/home_page.dart';
 import 'package:photo_nest/pages/login_page.dart';
 import 'package:photo_nest/pages/register_page.dart';
+import 'package:photo_nest/services/firebase_services.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  GetIt.instance.registerSingleton<FirebaseServices>(
+    FirebaseServices(),
+  );
   runApp(const MyApp());
 }
 
